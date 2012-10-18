@@ -23,7 +23,7 @@ __PACKAGE__->table("feeds");
 
 =head1 ACCESSORS
 
-=head2 id_feed
+=head2 id
 
   data_type: 'integer'
   is_auto_increment: 1
@@ -64,7 +64,7 @@ __PACKAGE__->table("feeds");
 =cut
 
 __PACKAGE__->add_columns(
-  "id_feed",
+  "id",
   {
     data_type         => "integer",
     is_auto_increment => 1,
@@ -89,13 +89,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</id_feed>
+=item * L</id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("id_feed");
+__PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
@@ -110,13 +110,13 @@ Related object: L<feedme::Schema::Result::Item>
 __PACKAGE__->has_many(
   "items",
   "feedme::Schema::Result::Item",
-  { "foreign.id_feed" => "self.id_feed" },
+  { "foreign.feed_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07033 @ 2012-10-18 21:42:22
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:8VmOewfYq5/LlNTwEQYiEQ
+# Created by DBIx::Class::Schema::Loader v0.07033 @ 2012-10-18 23:18:32
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:coUy9P+feO3HyQbBrAB9gg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

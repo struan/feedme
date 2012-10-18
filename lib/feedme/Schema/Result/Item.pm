@@ -23,14 +23,14 @@ __PACKAGE__->table("items");
 
 =head1 ACCESSORS
 
-=head2 id_item
+=head2 id
 
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
   sequence: 'items_id_item_seq'
 
-=head2 id_feed
+=head2 feed_id
 
   data_type: 'integer'
   is_foreign_key: 1
@@ -64,14 +64,14 @@ __PACKAGE__->table("items");
 =cut
 
 __PACKAGE__->add_columns(
-  "id_item",
+  "id",
   {
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
     sequence          => "items_id_item_seq",
   },
-  "id_feed",
+  "feed_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "title",
   { data_type => "text", is_nullable => 1 },
@@ -89,17 +89,17 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</id_item>
+=item * L</id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("id_item");
+__PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
-=head2 id_feed
+=head2 feed
 
 Type: belongs_to
 
@@ -108,15 +108,15 @@ Related object: L<feedme::Schema::Result::Feed>
 =cut
 
 __PACKAGE__->belongs_to(
-  "id_feed",
+  "feed",
   "feedme::Schema::Result::Feed",
-  { id_feed => "id_feed" },
+  { id => "feed_id" },
   { is_deferrable => 0, on_delete => "NO ACTION", on_update => "NO ACTION" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07033 @ 2012-10-18 21:42:22
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Q9kA5y1uE0bPBJADtFZATA
+# Created by DBIx::Class::Schema::Loader v0.07033 @ 2012-10-18 23:18:32
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:jpx41F1jCnkhsViV8gSYQg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

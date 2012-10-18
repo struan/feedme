@@ -62,7 +62,7 @@
           <ol>          
             <% FOR item IN items %>
             <li>
-            <% item.id_feed.name %>: <% item.title %>
+            <% item.feed.name %>: <% item.title %>
             </li>
             <% END %>
           </ol>
