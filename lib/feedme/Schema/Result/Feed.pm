@@ -20,6 +20,7 @@ use base 'DBIx::Class::Core';
 =cut
 
 __PACKAGE__->table("feeds");
+__PACKAGE__->load_components(qw( FilterColumn ));
 
 =head1 ACCESSORS
 
@@ -118,6 +119,45 @@ __PACKAGE__->has_many(
 # Created by DBIx::Class::Schema::Loader v0.07033 @ 2012-10-18 23:18:32
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:coUy9P+feO3HyQbBrAB9gg
 
+use HTTP::Headers;
+
+__PACKAGE__->filter_column(
+    headers => {
+        filter_from_storage => sub {
+            my $self = shift;
+            my $header_string = shift;
+            my $headers = HTTP::Headers->new();
+            
+            my %headers = map { m/([^:]*):\s*(.*)/; $1 => $2; } 
+                                                split("\n", $header_string );
+
+            foreach my $header ( keys %headers ) {
+                $headers->header($header   =>  $headers{$header});
+            }
+
+            return $headers;
+        },
+        filter_to_storage => sub {
+            my $self = shift;
+            my $headers = shift;
+            return '' unless $headers;
+            my $header_string = "";
+            
+            if ( $headers->header( 'Last-Modified' ) ) {
+                $header_string = "If-Modified-Since: " 
+                                 . $headers->header('Last-Modified')
+                                 . "\n";
+            }
+
+            if ( $headers->header( 'Etag' ) ) {
+                $header_string .= "If-None-Match: "
+                                  . $headers->header('ETag')
+                                  . "\n";
+            }
+            return $header_string;
+        }
+    }
+);
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 1;
