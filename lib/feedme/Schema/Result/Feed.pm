@@ -15,12 +15,23 @@ use warnings;
 
 use base 'DBIx::Class::Core';
 
+=head1 COMPONENTS LOADED
+
+=over 4
+
+=item * L<DBIx::Class::FilterColumn>
+
+=back
+
+=cut
+
+__PACKAGE__->load_components("FilterColumn");
+
 =head1 TABLE: C<feeds>
 
 =cut
 
 __PACKAGE__->table("feeds");
-__PACKAGE__->load_components(qw( FilterColumn ));
 
 =head1 ACCESSORS
 
@@ -116,8 +127,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07033 @ 2012-10-18 23:18:32
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:coUy9P+feO3HyQbBrAB9gg
+# Created by DBIx::Class::Schema::Loader v0.07033 @ 2012-11-05 21:28:51
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:EFavWWTNmTlMAPHZiM5jtw
 
 use HTTP::Headers;
 

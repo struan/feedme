@@ -15,6 +15,18 @@ use warnings;
 
 use base 'DBIx::Class::Core';
 
+=head1 COMPONENTS LOADED
+
+=over 4
+
+=item * L<DBIx::Class::FilterColumn>
+
+=back
+
+=cut
+
+__PACKAGE__->load_components("FilterColumn");
+
 =head1 TABLE: C<items>
 
 =cut
@@ -61,6 +73,12 @@ __PACKAGE__->table("items");
   data_type: 'text'
   is_nullable: 1
 
+=head2 viewed
+
+  data_type: 'boolean'
+  default_value: false
+  is_nullable: 0
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -83,6 +101,8 @@ __PACKAGE__->add_columns(
   { data_type => "timestamp", is_nullable => 1 },
   "md5",
   { data_type => "text", is_nullable => 1 },
+  "viewed",
+  { data_type => "boolean", default_value => \"false", is_nullable => 0 },
 );
 
 =head1 PRIMARY KEY
@@ -115,8 +135,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07033 @ 2012-10-18 23:18:32
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:jpx41F1jCnkhsViV8gSYQg
+# Created by DBIx::Class::Schema::Loader v0.07033 @ 2012-11-05 21:28:51
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:g1E32ZqSGjm10EK6mHf19A
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
