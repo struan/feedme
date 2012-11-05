@@ -1,16 +1,33 @@
 use strict;
 use warnings;
 
+use FindBin;
+use Cwd qw/realpath/;
+use Dancer ':script';
+ 
+my $appdir=realpath( "$FindBin::Bin/..");
+
+# we seem to have to do all this, not sure why...
+Dancer::Config::setting('appdir',$appdir);
+Dancer::Config::setting('confdir',$appdir);
+Dancer::Config::setting('envdir',"$appdir/environments");
+Dancer::Config::load();
+
 use Modern::Perl;
 use feedme::Schema;
 use feedme::Fetch;
 use feedme::Parse;
 use feedme::Process;
-use Data::Printer;
 
-my $schema = feedme::Schema->connect('dbi:Pg:dbname=feedme;host=localhost', 'feedme', 'feedme' );
+my $db_conf = config->{plugins}->{DBIC}->{default};
+
+my $schema = feedme::Schema->connect(
+    $db_conf->{dsn},
+    $db_conf->{user},
+    $db_conf->{pass}
+);
+    
 my $feeds = $schema->resultset('Feed')->search( { should_fetch => 1 } );
-# my $fetcher = feedme::Fetch->new();
 
 while ( my $feed = $feeds->next) {
     warn $feed->uri;
