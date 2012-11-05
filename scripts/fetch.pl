@@ -1,9 +1,11 @@
 use strict;
 use warnings;
 
+use Modern::Perl;
 use feedme::Schema;
 use feedme::Fetch;
 use feedme::Parse;
+use feedme::Process;
 use Data::Printer;
 
 my $schema = feedme::Schema->connect('dbi:Pg:dbname=feedme;host=localhost', 'feedme', 'feedme' );
@@ -15,9 +17,12 @@ while ( my $feed = $feeds->next) {
     my $content = feedme::Fetch::fetch_feed( $feed );
 
     next unless $content;
-    warn $content;
 
     my $items = feedme::Parse::parse_rss( string => $content );
 
-    p $items;
+    feedme::Process::process_feed(
+        $items,
+        $feed,
+        $schema,
+    );
 }
