@@ -15,5 +15,6 @@ CREATE TABLE items (
     permalink TEXT,
     content TEXT,
     last_update timestamp,
-    md5 TEXT
+    md5 TEXT,
+    viewed BOOLEAN not null default 'f'
 );
