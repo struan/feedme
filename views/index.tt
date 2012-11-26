@@ -2,11 +2,12 @@
       <div id="content">
           <ul>          
             <% FOR item IN items %>
-            <li>
+            <li id="item_<% item.id %>" class="item unread">
             <% item.feed.name %>: <a href="<% item.permalink %>" class="title"><% item.title %></a>
             <div class="article">
             <% item.content %>
             </div>
+            <div class="unread_end"></div>
             </li>
             <% END %>
           </ul>
