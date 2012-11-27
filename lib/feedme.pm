@@ -24,4 +24,24 @@ post '/viewed' => sub {
     return { success => 1, id => $id };
 };
 
+get '/admin/add' => sub {
+    template 'add';
+};
+
+post '/admin/add' => sub {
+    my $name = param "name";
+    my $uri  = param "uri";
+
+    my $feed = schema->resultset('Feed')->find_or_create(
+        {
+            name => $name,
+            uri  => $uri,
+        }
+    );
+
+    template 'added' => {
+        feed => $feed,
+    };
+};
+
 true;

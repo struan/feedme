@@ -1,0 +1,11 @@
+<div id="page">
+    <div id="content">
+        <form target="/admin/add" method="POST">
+            <ul>
+                <li><label for="name">name</label><input name="name" id="name" type="text"></li>
+                <li><label for="uri">uri</label><input name="uri" id="uri" type="text"></li>
+                <li><input type="submit" value="add"></li>
+            </ul>
+        </form>
+    </div>
+</div>
