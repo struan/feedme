@@ -4,8 +4,8 @@
     <meta name="viewport" content="initial-scale=1.0">
     <meta http-equiv="Content-type" content="text/html; charset=<% settings.charset %>" />
     <title>feedme</title>
-    <link rel="stylesheet" href="<% request.uri_base %>/css/style.css" />
-    <script src="<% request.uri_base %>/javascripts/zepto.js"></script>
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="/javascripts/zepto.js"></script>
     <script src="/javascripts/feedme.js"></script>
 
 </head>
