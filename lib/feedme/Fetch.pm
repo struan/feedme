@@ -85,7 +85,7 @@ sub fetch {
         $feed->update() if $feed;
             
         $req = HTTP::Request->new(
-                GET =>  RSS2Mail::Util::uri_to_abs( $resp->header('Location'), 
+                GET =>  feedme::Util::uri_to_abs( $resp->header('Location'), 
                                      $resp->base ),
                     $head
                );
