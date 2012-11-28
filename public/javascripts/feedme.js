@@ -1,10 +1,11 @@
 function item_read(response) {
-    if ( response.success) {
-        var item_id = '#item_' . response.id;
+    var data = $.parseJSON( response );
+    if ( data.success == 1 ) {
+        var item_id = '#item_' + data.id;
         var el = $(item_id);
-        el.removeClass('read');
-        el.addClass('unread');
-        el.children('.unread_end').removeClass('unread_end');
+        el.removeClass('unread');
+        el.addClass('read');
+        el.children('.unread_end').removeClass();
     }
 }
 
