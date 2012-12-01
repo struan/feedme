@@ -40,7 +40,7 @@ __PACKAGE__->table("feeds");
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'feeds_id_feed_seq'
+  sequence: 'feeds_id_seq'
 
 =head2 name
 
@@ -81,7 +81,7 @@ __PACKAGE__->add_columns(
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "feeds_id_feed_seq",
+    sequence          => "feeds_id_seq",
   },
   "name",
   { data_type => "text", is_nullable => 0 },
@@ -127,8 +127,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07033 @ 2012-11-05 21:28:51
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:EFavWWTNmTlMAPHZiM5jtw
+# Created by DBIx::Class::Schema::Loader v0.07033 @ 2012-12-01 15:31:30
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:7nP+SsLSeznRrF1jQY4A/g
 
 use HTTP::Headers;
 

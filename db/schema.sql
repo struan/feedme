@@ -16,5 +16,6 @@ CREATE TABLE items (
     content TEXT,
     last_update timestamp,
     md5 TEXT,
+    diff TEXT,
     viewed BOOLEAN not null default 'f'
 );

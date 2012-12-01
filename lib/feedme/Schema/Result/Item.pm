@@ -40,7 +40,7 @@ __PACKAGE__->table("items");
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'items_id_item_seq'
+  sequence: 'items_id_seq'
 
 =head2 feed_id
 
@@ -79,6 +79,11 @@ __PACKAGE__->table("items");
   default_value: false
   is_nullable: 0
 
+=head2 diff
+
+  data_type: 'text'
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -87,7 +92,7 @@ __PACKAGE__->add_columns(
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "items_id_item_seq",
+    sequence          => "items_id_seq",
   },
   "feed_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
@@ -103,6 +108,8 @@ __PACKAGE__->add_columns(
   { data_type => "text", is_nullable => 1 },
   "viewed",
   { data_type => "boolean", default_value => \"false", is_nullable => 0 },
+  "diff",
+  { data_type => "text", is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -135,8 +142,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07033 @ 2012-11-05 21:28:51
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:g1E32ZqSGjm10EK6mHf19A
+# Created by DBIx::Class::Schema::Loader v0.07033 @ 2012-12-01 15:31:30
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:LhoITlgwI+OQ7yn5BXurMw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
