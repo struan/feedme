@@ -29,7 +29,7 @@ sub process_feed {
         $fetched_item->{ 'md5' } = $md5;
         
         my $item = $schema->resultset('Item')->find_or_create( {
-                            permalink => $fetched_item->{'permalink'},
+                            permalink => $fetched_item->{'link'},
                             feed_id   => UNIVERSAL::can( $feed, 'id' ) ? 
                                             $feed->id 
                                             : 0,
