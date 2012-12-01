@@ -40,7 +40,7 @@ while ( my $feed = $feeds->next) {
 
     next unless $content;
 
-    my $items = feedme::Parse::parse_rss( string => $content );
+    my $items = feedme::Parse::parse_rss( string => $content, base => $feed->uri );
 
     feedme::Process::process_feed(
         $items,

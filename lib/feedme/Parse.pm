@@ -3,6 +3,7 @@ package feedme::Parse;
 use strict;
 use warnings;
 use XML::Feed;
+use HTML::ResolveLink;
 use List::Util qw( first );
 use Carp;
 
@@ -85,7 +86,7 @@ sub parse_rss {
     if ( $args{ title_only } ) {
         return $parser->title;
     }
-    
+
     my @feed;
     foreach my $item ( $parser->entries ) {
         my $desc = $item->content->body || '[no content]';
@@ -155,8 +156,13 @@ sub parse_rss {
                 $base = $args{feed_uri} if $base eq '.' or $base !~ /^http:/;
                 $link = feedme::Util::uri_to_abs($link, $base);    
             }
-
         }
+
+        my $resolver = HTML::ResolveLink->new(
+            base => $link,
+        );
+        
+        $desc = $resolver->resolve( $desc );
         
         push @feed, { 
                       author => $author,
