@@ -3,11 +3,18 @@
           <ul>          
             <% FOR item IN items %>
             <li id="item_<% item.id %>" class="item unread">
-            <% item.feed.name %>: <a href="<% item.permalink %>" class="title"><% item.title %></a>
-            <div class="article">
-            <% item.content %>
-            </div>
-            <div class="unread_end"></div>
+                <h3 class="title">
+                    <a href="<% item.permalink %>" class="title"><% item.title %></a>
+                </h3>
+
+                <div class="article_meta">
+                    <% item.feed.name %>, <% item.last_update %>
+                </div>
+
+                <div class="article">
+                    <% item.content %>
+                </div>
+                <div class="unread_end"></div>
             </li>
             <% END %>
           </ul>
