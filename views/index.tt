@@ -4,7 +4,7 @@
             <% FOR item IN items %>
             <li id="item_<% item.id %>" class="item unread">
                 <h3 class="title">
-                    <a href="<% item.permalink %>" class="title"><% item.title %></a>
+                    <a href="<% item.link %>" class="title"><% item.title %></a>
                 </h3>
 
                 <div class="article_meta">

@@ -13,6 +13,7 @@ CREATE TABLE items (
     feed_id INT REFERENCES feeds(id) NOT NULL,
     title TEXT,
     permalink TEXT,
+    link TEXT,
     content TEXT,
     last_update timestamp,
     md5 TEXT,

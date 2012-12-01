@@ -84,6 +84,11 @@ __PACKAGE__->table("items");
   data_type: 'text'
   is_nullable: 1
 
+=head2 link
+
+  data_type: 'text'
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -109,6 +114,8 @@ __PACKAGE__->add_columns(
   "viewed",
   { data_type => "boolean", default_value => \"false", is_nullable => 0 },
   "diff",
+  { data_type => "text", is_nullable => 1 },
+  "link",
   { data_type => "text", is_nullable => 1 },
 );
 
@@ -142,8 +149,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07033 @ 2012-12-01 15:31:30
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:LhoITlgwI+OQ7yn5BXurMw
+# Created by DBIx::Class::Schema::Loader v0.07033 @ 2012-12-01 15:53:24
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ejR3BFa0vryckN+HTc1IKg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

@@ -29,7 +29,7 @@ sub process_feed {
         $fetched_item->{ 'md5' } = $md5;
         
         my $item = $schema->resultset('Item')->find_or_create( {
-                            permalink => $fetched_item->{'link'},
+                            permalink => $fetched_item->{'permalink'},
                             feed_id   => UNIVERSAL::can( $feed, 'id' ) ? 
                                             $feed->id 
                                             : 0,
@@ -48,7 +48,8 @@ sub process_feed {
                 $item->content( $fetched_item->{'content'} );
                 $item->title( $fetched_item->{'title'} );
                 $item->last_update( $fetched_item->{'date'} || \'current_timestamp' );
-                $item->permalink( $fetched_item->{'link'} );
+                $item->link( $fetched_item->{'link'} );
+                $item->permalink( $fetched_item->{'permalink'} );
                 # $item->author( $fetched_item->{'author'} );
                 $item->diff( $diff );
                 $item->md5( $md5 );
@@ -58,7 +59,8 @@ sub process_feed {
             $item->content( $fetched_item->{'content'} );
             $item->title( $fetched_item->{'title'} );
             $item->last_update( $fetched_item->{'date'} || \'current_timestamp' );
-            $item->permalink( $fetched_item->{'link'} );
+            $item->link( $fetched_item->{'link'} );
+            $item->permalink( $fetched_item->{'permalink'} );
             # $item->author( $fetched_item->{'author'} );
             $item->md5( $md5 );
         }
