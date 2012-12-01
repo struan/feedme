@@ -7,10 +7,15 @@ use Dancer ':script';
  
 my $appdir=realpath( "$FindBin::Bin/..");
 
+my $env = shift || 'development';
+
 # we seem to have to do all this, not sure why...
 Dancer::Config::setting('appdir',$appdir);
 Dancer::Config::setting('confdir',$appdir);
 Dancer::Config::setting('envdir',"$appdir/environments");
+
+config->{environment} = $env;
+
 Dancer::Config::load();
 
 use Modern::Perl;
