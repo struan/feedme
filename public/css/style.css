@@ -90,6 +90,18 @@ code, tt {
     font-family: 'Andale Mono', Monaco, 'Liberation Mono', 'Bitstream Vera Sans Mono', 'DejaVu Sans Mono', monospace;
 }
 
+label {
+    display: block;
+}
+
+#name {
+    width: 10em;
+}
+
+#uri {
+    width: 40em;
+}
+
 #footer {
 clear: both;
 padding-top: 2em;
