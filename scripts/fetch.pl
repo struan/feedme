@@ -4,6 +4,7 @@ use warnings;
 use FindBin;
 use Cwd qw/realpath/;
 use Dancer ':script';
+use Try::Tiny;
  
 my $appdir=realpath( "$FindBin::Bin/..");
 
@@ -40,11 +41,21 @@ while ( my $feed = $feeds->next) {
 
     next unless $content;
 
-    my $items = feedme::Parse::parse_rss( string => $content, base => $feed->uri );
+    my $items;
 
-    feedme::Process::process_feed(
-        $items,
-        $feed,
-        $schema,
-    );
+    try {
+        $items = feedme::Parse::parse_rss( string => $content, base => $feed->uri );
+    } catch { 
+        warn sprintf( "problem parsing feed %s:\n%s\n", $feed->name, $_ );
+    }
+
+    try {
+        feedme::Process::process_feed(
+            $items,
+            $feed,
+            $schema,
+        ) if $items;
+    } catch {
+        warn sprintf( "problem processing feed %s:\n%s\n", $feed->name, $_ );
+    }
 }
