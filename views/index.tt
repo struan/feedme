@@ -14,7 +14,7 @@
                 <div class="article">
                     <% item.content %>
                 </div>
-                <div class="unread_end"></div>
+                <div id="item_end_<% item.id %>" class="unread_end"></div>
             </li>
             <% END %>
           </ul>

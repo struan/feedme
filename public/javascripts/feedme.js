@@ -17,8 +17,8 @@ function check_for_read() {
     $('.unread_end').each( function() {
         var el = $(this);
         if ( el.offset().top < screenBottom ) {
-            var item_id = el.parent().attr('id');
-            item_id = item_id.replace('item_', '');
+            var item_id = el.attr('id');
+            item_id = item_id.replace('item_end_', '');
             $.post('/viewed', { id: item_id }, item_read );
         }
     });
