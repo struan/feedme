@@ -44,4 +44,11 @@ post '/admin/add' => sub {
     };
 };
 
+get '/admin/list' => sub {
+    my $feeds = schema->resultset('Feed')->search();
+    template 'list' => {
+        feeds => $feeds,
+    };
+};
+
 true;

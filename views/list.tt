@@ -1,0 +1,11 @@
+    <div id="page">
+        <div id="content">
+            <ul class="feedlist">
+            <%- WHILE ( feed = feeds.next ) %>
+                <li id="feed_<% feed.id %>" class="feed">
+                <% feed.name %>: <% feed.uri %>
+                </li>
+            <%- END %>
+            </ul>
+        </div>
+    </div>
