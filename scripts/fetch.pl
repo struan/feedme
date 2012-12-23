@@ -47,7 +47,7 @@ while ( my $feed = $feeds->next) {
         $items = feedme::Parse::parse_rss( string => $content, base => $feed->uri );
     } catch { 
         warn sprintf( "problem parsing feed %s:\n%s\n", $feed->name, $_ );
-    }
+    };
 
     try {
         feedme::Process::process_feed(
@@ -57,5 +57,5 @@ while ( my $feed = $feeds->next) {
         ) if $items;
     } catch {
         warn sprintf( "problem processing feed %s:\n%s\n", $feed->name, $_ );
-    }
+    };
 }
