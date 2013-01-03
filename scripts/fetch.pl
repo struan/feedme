@@ -10,9 +10,11 @@ use Getopt::Long;
 my $appdir=realpath( "$FindBin::Bin/..");
 
 my $env = 'development';
+my $verbose;
 
 my $result = GetOptions( 
     "env=s"   => \$env,
+    "verbose" => \$verbose
 );
 
 # we seem to have to do all this, not sure why...
@@ -41,7 +43,7 @@ my $schema = feedme::Schema->connect(
 my $feeds = $schema->resultset('Feed')->search( { should_fetch => 1 } );
 
 while ( my $feed = $feeds->next) {
-    warn $feed->uri;
+    warn $feed->uri if $verbose;
     my $content = feedme::Fetch::fetch_feed( $feed );
 
     next unless $content;
