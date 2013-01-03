@@ -5,10 +5,15 @@ use FindBin;
 use Cwd qw/realpath/;
 use Dancer ':script';
 use Try::Tiny;
+use Getopt::Long;
  
 my $appdir=realpath( "$FindBin::Bin/..");
 
-my $env = shift || 'development';
+my $env = 'development';
+
+my $result = GetOptions( 
+    "env=s"   => \$env,
+);
 
 # we seem to have to do all this, not sure why...
 Dancer::Config::setting('appdir',$appdir);
