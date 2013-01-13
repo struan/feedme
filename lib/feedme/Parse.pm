@@ -87,6 +87,11 @@ sub parse_rss {
         return $parser->title;
     }
 
+    unless ( $args{feed}->name ) {
+        $args{feed}->name( $parser->title );
+        $args{feed}->update;
+    }
+
     my @feed;
     foreach my $item ( $parser->entries ) {
         my $desc = $item->content->body || '[no content]';
