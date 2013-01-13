@@ -14,6 +14,8 @@ use feedme::Util;
 sub fetch_feed {
     my $feed = shift;
     my $content;
+
+    Dancer::debug sprintf( "fetching feed %d (%s)", $feed->id, $feed->name);
     
     eval { 
         $content = fetch( { feed => $feed } );
@@ -23,11 +25,11 @@ sub fetch_feed {
              or UNIVERSAL::isa( $@, 'feedme::Exception::Fetch::MaxNotFound' ) 
              or UNIVERSAL::isa( $@, 'feedme::Exception::Fetch::NotAllowed' ) 
         ) {
-            warn $@;
+            Dancer::error $@;
             $content = $@->rss($feed);
             $feed->update( { should_fetch => 0 } );
         } elsif ( UNIVERSAL::isa( $@, 'feedme::Exception::Fetch' ) ) {
-            warn $@;
+            Dancer::error $@;
         } else {
             croak $@;
         }

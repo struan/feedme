@@ -22,13 +22,13 @@ sub uri_to_abs {
 sub autodiscover {
     my $uri = shift;
 
-    warn "DEBUG: Attempting autodiscovery at $uri\n" if Dancer::Config::setting('DEBUG');
+    Dancer::info "Attempting autodiscovery at $uri";
    
     my @links = XML::Feed->find_feeds( $uri );
 
     if ( Dancer::Config::setting('DUMPER') ) {
-        warn "DEBUG: autodiscovery found:\n" if Dancer::Config::setting('DEBUG') > 1;
-        warn Dumper( \@links ) if Dancer::Config::setting('DEBUG') > 1;
+        Dancer::info "autodiscovery found:";
+        Dancer::info \@links;
     }
    
     # just return the first link

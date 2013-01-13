@@ -53,7 +53,7 @@ while ( my $feed = $feeds->next) {
     try {
         $items = feedme::Parse::parse_rss( string => $content, base => $feed->uri, feed => $feed );
     } catch { 
-        warn sprintf( "problem parsing feed %s:\n%s\n", $feed->name, $_ );
+        log sprintf( "problem parsing feed %s:\n%s\n", $feed->name, $_ );
     };
 
     try {
