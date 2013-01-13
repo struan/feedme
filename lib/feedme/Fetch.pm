@@ -123,7 +123,7 @@ sub fetch {
             );
             $feed->update();
             
-            if ( $feed->failed_updates > $RSS2Mail::Config::max_not_found ) {
+            if ( $feed->failed_updates > Dancer::Config::setting('max_not_found') ) {
                 feedme::Exception::Fetch::MaxNotFound->throw(
                     feed  => $feed->name,
                     code  => $resp->code,

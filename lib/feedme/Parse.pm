@@ -70,7 +70,7 @@ sub parse_rss {
         unless ( $failed_parse and $] < 5.007 ) {
             $args{ string } = encode( 'utf8', $args{ string } );
             $failed_parse = $@;
-            if ( $RSS2Mail::Config::DEBUG > 1 ) {
+            if ( Dancer::Config::setting('DEBUG') > 1 ) {
                 warn "DEBUG: reparsing\n";
                 warn "DEBUG: original error: $@\n";
             }
@@ -135,7 +135,7 @@ sub parse_rss {
             $link = $item->id;
             if ( not $link or $link !~ /^https?:/ ) {
                 warn "DEBUG: no http in link or id, trying extreme measures\n"
-                    if ( $RSS2Mail::Config::DEBUG > 2 );
+                    if ( Dancer::Config::setting('DEBUG') > 2 );
                 # XML::Feed only looks for links with rel eq 'alternate'
                 # but the atom spec tells us that if there's no rel then
                 # we can assume it meant alternate
@@ -156,7 +156,7 @@ sub parse_rss {
             if ( not $link or $link !~ /^https?:/ ) {
                 warn "DEBUG: still no http in link or id, useing _uri_to_abs on
                       $link and " . $parser->link . "\n"
-                    if ( $RSS2Mail::Config::DEBUG > 2 );
+                    if ( Dancer::Config::setting('DEBUG') > 2 );
                 my $base = $parser->link;
                 $base = $args{feed_uri} if $base eq '.' or $base !~ /^https?:/;
                 $link = feedme::Util::uri_to_abs($link, $base);    
