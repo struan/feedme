@@ -13,6 +13,13 @@ get '/' => sub {
     };
 };
 
+get '/:id' => sub {
+    my $items = [ schema->resultset('Item')->get_unread( param('feed') )->all ];
+    template 'index' => {
+        items => $items
+    };
+};
+
 post '/viewed' => sub {
     my $id = param "id";
     my $item = schema->resultset('Item')->find( { id => $id } );
