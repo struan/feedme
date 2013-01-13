@@ -7,7 +7,7 @@ set serializer => 'JSON';
 our $VERSION = '0.1';
 
 get '/' => sub {
-    my $items = [ schema->resultset('Item')->search( { viewed => 0 }, { order_by => { -desc => 'last_update' }, join => 'feed' } )->all ];
+    my $items = [ schema->resultset('Item')->get_unread->all ];
     template 'index' => {
         items => $items
     };
