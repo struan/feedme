@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use Carp;
 use Digest::MD5 qw(md5_hex);
-use Text::Diff;
+use Text::WordDiff;
 
 # we need this for unicode in 5.8+
 BEGIN {
@@ -84,7 +84,7 @@ sub diff_text {
     $new .= "\n" unless $new =~ /\n$/s;
     $orig .= "\n" unless $orig =~ /\n$/s;
     
-    my $diff = diff \$orig, \$new;
+    my $diff = word_diff( \$orig, \$new, { STYLE => 'HTML' } );
 
     return $diff;
 }

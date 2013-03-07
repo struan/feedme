@@ -14,9 +14,15 @@
                         <% item.feed.name %>, <% item.last_update %>
                     </div>
 
+                    <% IF item.diff %>
+                    <div class="article">
+                        <% item.diff %>
+                    </div>
+                    <% ELSE %>
                     <div class="article">
                         <% item.content %>
                     </div>
+                    <% END %>
                     <div id="item_end_<% item.id %>" class="unread_end"></div>
                 </li>
             <%- END %>

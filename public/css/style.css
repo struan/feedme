@@ -18,6 +18,10 @@ h1 {
 
 a  {color: #03c}
 
+del { color: red; }
+
+ins { color: green; }
+
 #page {
     background-color: #ddd;
     width: 40em;
