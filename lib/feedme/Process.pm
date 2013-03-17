@@ -14,7 +14,7 @@ BEGIN {
     }
 };
 
-sub process_feed {    
+sub process_feed {
     my $items = shift;
     my $feed = shift;
     my $schema = shift;
