@@ -2,7 +2,7 @@
         <div id="content">
             <ul class="feedlist">
             <%- WHILE ( feed = feeds.next ) %>
-                <li id="feed_<% feed.id %>" class="feed">
+                <li id="feed_<% feed.id %>" class="feed <% feed.should_fetch ? 'fetch' : 'nofetch' %>">
                 <% feed.name %>: <% feed.uri %>
                 </li>
             <%- END %>
