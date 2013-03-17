@@ -67,6 +67,8 @@ sub process_feed {
 
         $item->update;
     }
+
+    $feed->update( { last_update => \'current_timestamp' } ) if @$items;
 }
 
 sub diff_text {
