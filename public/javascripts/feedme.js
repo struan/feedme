@@ -24,7 +24,20 @@ function check_for_read() {
     });
 }
 
+function toggle_fetch(e) {
+    console.log(e);
+    var t = $(e.target);
+    var item_id = t.attr('id');
+    item_id = item_id.replace('feed_', '');
+    if ( t.hasClass('should_fetch') ) {
+        $.post('/admin/fetch_off', { id: item_id }, function() { t.removeClass('should_fetch').addClass('nofetch'); } );
+    } else {
+        $.post('/admin/fetch_on', { id: item_id }, function() { t.removeClass('nofetch').addClass('should_fetch'); } );
+    }
+}
+
 Zepto(function($) {
     $(document).on('scroll', check_for_read );
+    $('ul.feedlist li').on('click', toggle_fetch);
     $('li.item');
 });

@@ -58,4 +58,22 @@ get '/admin/list' => sub {
     };
 };
 
+post '/admin/fetch_on' => sub {
+    my $id = param "id";
+
+    my $feed = schema->resultset('Feed')->find( { id => $id } );
+    $feed->update( { should_fetch => 1 } );
+
+    return { success => 1, id => $feed->id };
+};
+
+post '/admin/fetch_off' => sub {
+    my $id = param "id";
+
+    my $feed = schema->resultset('Feed')->find( { id => $id } );
+    $feed->update( { should_fetch => 0 } );
+
+    return { success => 1, id => $feed->id };
+};
+
 true;
