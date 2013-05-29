@@ -24,6 +24,14 @@ function check_for_read() {
     });
 }
 
+function mark_as_read(e) {
+    e.preventDefault();
+    var el = $(e.srcElement);
+    var item_id = el.parents('li.item').attr('id');
+    item_id = item_id.replace('item_', '');
+    $.post('/viewed', { id: item_id }, item_read );
+}
+
 function toggle_fetch(e) {
     console.log(e);
     var t = $(e.target);
@@ -38,6 +46,7 @@ function toggle_fetch(e) {
 
 Zepto(function($) {
     $(document).on('scroll', check_for_read );
+    $('.mark_as_read').on('click', mark_as_read);
     $('ul.feedlist li').on('click', toggle_fetch);
     $('li.item');
 });

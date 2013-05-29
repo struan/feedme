@@ -7,7 +7,7 @@
             <%- FOR item IN items %>
                 <li id="item_<% item.id %>" class="item unread">
                     <h3 class="title">
-                        <a href="<% item.link %>" class="title"><% item.title %></a>
+                        <a href="<% item.link %>" class="title"><% item.title %></a> <a href="#" class="mark_as_read">X</a>
                     </h3>
 
                     <div class="article_meta">
