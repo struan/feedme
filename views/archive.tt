@@ -1,0 +1,40 @@
+    <div id="page">
+        <div id="content">
+            <%- IF items.size == 0 %>
+            Nothing to read
+            <%- ELSE %>
+            <div>
+            <a href="/archive/<% page.prev  %>">&larr;</a>
+            <a href="/archive/<% page.next %>">&rarr;</a>
+            </div>
+            <ul>
+            <%- WHILE (item = items.next) %>
+                <li id="item_<% item.id %>" class="item unread">
+                    <h3 class="title">
+                        <a href="<% item.link %>" class="title"><% item.title %></a> <a href="#" class="mark_as_read">X</a>
+                    </h3>
+
+                    <div class="article_meta">
+                        <% item.feed.name %>, <% item.last_update %>
+                    </div>
+
+                    <% IF item.diff %>
+                    <div class="article">
+                        <% item.diff %>
+                    </div>
+                    <% ELSE %>
+                    <div class="article">
+                        <% item.content %>
+                    </div>
+                    <% END %>
+                    <div id="item_end_<% item.id %>" class="unread_end"></div>
+                </li>
+            <%- END %>
+            </ul>
+            <%- END %>
+            <div>
+            <a href="/archive/<% page.prev  %>">&larr;</a>
+            <a href="/archive/<% page.next %>">&rarr;</a>
+            </div>
+        </div>
+    </div>

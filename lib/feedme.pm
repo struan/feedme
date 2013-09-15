@@ -6,8 +6,26 @@ set serializer => 'JSON';
 
 our $VERSION = '0.1';
 
+get '/archive' => sub {
+    my $items = schema->resultset('Item')->get_read;
+    my $pager = $items->pager;
+    template 'archive' => {
+        items => $items,
+        page => $pager
+    };
+};
+
+get '/archive/:page' => sub {
+    my $items = schema->resultset('Item')->get_read;
+    my $pager = $items->pager;
+    template 'archive' => {
+        items => $items,
+        page => $pager
+    };
+};
+
 get '/' => sub {
-    my $items = [ schema->resultset('Item')->get_unread->all ];
+    my $items = [ schema->resultset('Item')->get_unread()->all ];
     template 'index' => {
         items => $items
     };
