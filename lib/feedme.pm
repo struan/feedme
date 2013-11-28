@@ -13,6 +13,12 @@ get '/' => sub {
     };
 };
 
+get '/extras' => sub {
+    template 'extras' => {
+        uri_base => request->uri_base
+    };
+};
+
 get '/:id' => sub {
     my $items = [ schema->resultset('Item')->get_unread( param('feed') )->all ];
     template 'index' => {
@@ -32,7 +38,21 @@ post '/viewed' => sub {
 };
 
 get '/admin/add' => sub {
-    template 'add';
+    my $uri = param "uri";
+    if ( $uri ) {
+        my $feed = schema->resultset('Feed')->find_or_create(
+            {
+                name => '',
+                uri  => $uri,
+            }
+        );
+
+        template 'added' => {
+            feed => $feed,
+        };
+    } else {
+        template 'add';
+    }
 };
 
 post '/admin/add' => sub {

@@ -1,0 +1,17 @@
+    <div id="page">
+        <div id="content">
+            <h1>Bookmarklet</h1>
+
+            <p>
+            Copy this into a bookmark:
+            </p>
+
+            <pre>
+            javascript:function f() {var l=document.getElementsByTagName('link');var b;for (var i=0;i < l.length;i++) {var ln=l[i];if (ln.rel == 'alternate') {var t=ln.type;t=t.replace('application/','');t=t.replace('+xml','');if (b) {if (b.type != 'atom' && t == 'atom') {b={href: ln.href,type: t};}} else {b={href: ln.href,type: t};}}} var url='<% uri_base %>/admin/add?uri='+encodeURIComponent(b.href);void(open(url,'Feedme','toolbar=no,width=700,height=350'));}f();
+            </pre>
+
+            <p>
+            Or drag this: <a href="javascript:function f() {var l=document.getElementsByTagName('link');var b;for (var i=0;i < l.length;i++) {var ln=l[i];if (ln.rel == 'alternate') {var t=ln.type;t=t.replace('application/','');t=t.replace('+xml','');if (b) {if (b.type != 'atom' && t == 'atom') {b={href: ln.href,type: t};}} else {b={href: ln.href,type: t};}}} var url='<% uri_base %>/admin/add?uri='+encodeURIComponent(b.href);void(open(url,'Feedme','toolbar=no,width=700,height=350'));}f();">feedme this</a>
+            </p>
+        </div>
+    </div>
