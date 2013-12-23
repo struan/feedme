@@ -140,7 +140,7 @@ sub parse_rss {
                 $link = undef;
                 if ( $item->{entry} and UNIVERSAL::can( $item->{entry}, 'link' ) ) {
                     $link = first { not $_->rel } $item->{entry}->link;
-                } elsif ( $item->{entry} and $item->{entry}->{link} ne "") {
+                } elsif ( $item->{entry} and $item->{entry}->{link} and $item->{entry}->{link} ne "") {
                     $link = $item->{entry}->{link};
                 }
 
