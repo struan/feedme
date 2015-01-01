@@ -98,6 +98,12 @@ sub parse_rss {
                 unless Encode::is_utf8( $desc );
         }
 
+        # this bit of hackery corrects a weird issue with embeded
+        # youtube videos on TOP where everything after the iframe
+        # isn't rendered. Not sure why and this is quicker than
+        # working out what's breaking
+        $desc =~ s#<(iframe[^>]*)/>#<$1></iframe>#g;
+
         my $title = $item->title
                   || '[no title]';
         $title =~s/\n//g;
