@@ -1,3 +1,10 @@
+function manual_item_read(response) {
+    var el = item_read(response);
+    if ( el ) {
+        el.remove();
+    }
+}
+
 function item_read(response) {
     var data = $.parseJSON( response );
     if ( data.success == 1 ) {
@@ -6,6 +13,7 @@ function item_read(response) {
         el.removeClass('unread');
         el.addClass('read');
         el.children('.unread_end').removeClass();
+        return el;
     }
 }
 
@@ -29,7 +37,7 @@ function mark_as_read(e) {
     var el = $(e.srcElement);
     var item_id = el.parents('li.item').attr('id');
     item_id = item_id.replace('item_', '');
-    $.post('/viewed', { id: item_id }, item_read );
+    $.post('/viewed', { id: item_id }, manual_item_read );
 }
 
 function toggle_fetch(e) {
