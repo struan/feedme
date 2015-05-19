@@ -157,8 +157,8 @@ sub parse_rss {
             # sometime we need to use the base URI in combination 
             # with the link to get an absolute URI...
             if ( not $link or $link !~ /^https?:/ ) {
-                Dancer::debug "DEBUG: still no http in link or id, useing _uri_to_abs on
-                      $link and " . $parser->link . "\n";
+                Dancer::debug "DEBUG: still no http in link or id, useing _uri_to_abs on "
+                      . ( $link || 'missing link' ) . " and " . $parser->link . "\n";
                 my $base = $parser->link;
                 $base = $args{feed_uri} if $base eq '.' or $base !~ /^https?:/;
                 $link = feedme::Util::uri_to_abs($link, $base);    
