@@ -16,7 +16,7 @@
 
                     <% IF item.diff %>
                     <div class="article">
-                        <% item.diff %>
+                        <i>Updated</i>
                     </div>
                     <% ELSE %>
                     <div class="article">
