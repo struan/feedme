@@ -37,6 +37,15 @@ get '/extras' => sub {
     };
 };
 
+get '/d/:id' => sub {
+    my $item = schema->resultset('Item')->find( { id => param('id') } );
+    if ( $item ) {
+        template 'diff' => {
+            item => $item
+        };
+    }
+};
+
 get '/:id' => sub {
     my $items = [ schema->resultset('Item')->get_unread( param('feed') )->all ];
     template 'index' => {

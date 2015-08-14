@@ -1,0 +1,15 @@
+    <div id="page">
+        <div id="content">
+            <h3 class="title">
+                <a href="<% item.link %>" class="title"><% item.title %></a>
+            </h3>
+
+            <div class="article_meta">
+                <% item.feed.name %>, <% item.last_update %>
+            </div>
+
+            <div class="article">
+                <% item.diff %>
+            </div>
+        </div>
+    </div>

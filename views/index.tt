@@ -16,7 +16,7 @@
 
                     <% IF item.diff %>
                     <div class="article">
-                        <i>Updated</i>
+                        <i>Updated <a href="/d/<% item.id %>">&rarr;</i>
                     </div>
                     <% ELSE %>
                     <div class="article">
