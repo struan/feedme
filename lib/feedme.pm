@@ -1,8 +1,10 @@
 package feedme;
-use Dancer ':syntax';
-use Dancer::Plugin::DBIC 'schema';
+use Dancer2;
+use Dancer2::Plugin::DBIC;
 
+=pod
 set serializer => 'JSON';
+=cut
 
 our $VERSION = '0.1';
 
@@ -61,7 +63,7 @@ post '/viewed' => sub {
         $item->update;
     }
 
-    return { success => 1, id => $id };
+    send_as JSON => { success => 1, id => $id };
 };
 
 get '/admin/add' => sub {
@@ -111,7 +113,7 @@ post '/admin/fetch_on' => sub {
     my $feed = schema->resultset('Feed')->find( { id => $id } );
     $feed->update( { should_fetch => 1 } );
 
-    return { success => 1, id => $feed->id };
+    send_as JSON => { success => 1, id => $feed->id };
 };
 
 post '/admin/fetch_off' => sub {
@@ -120,7 +122,7 @@ post '/admin/fetch_off' => sub {
     my $feed = schema->resultset('Feed')->find( { id => $id } );
     $feed->update( { should_fetch => 0 } );
 
-    return { success => 1, id => $feed->id };
+    send_as JSON => { success => 1, id => $feed->id };
 };
 
 true;

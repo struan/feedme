@@ -20,8 +20,6 @@ charset: "UTF-8"
 
 template: "template_toolkit"
 engines:
-  template_toolkit:
-    encoding:  'utf8'
-#     start_tag: '[%'
-#     end_tag:   '%]'
-
+  template:
+    template_toolkit:
+      encoding:  'utf8'
