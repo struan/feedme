@@ -1,14 +1,30 @@
 package feedme;
 use Dancer2;
 use Dancer2::Plugin::DBIC;
-
-=pod
-set serializer => 'JSON';
-=cut
+use Dancer2::Plugin::Auth::Tiny;
 
 our $VERSION = '0.1';
 
-get '/archive' => sub {
+get '/login' => sub {
+    template 'login' => {};
+};
+
+post '/login' => sub {
+    if ( _is_valid( params->{username}, params->{password} ) ) {
+        session user => params->{username};
+        return redirect '/';
+    } else {
+        template 'login' => {};
+    }
+};
+
+sub _is_valid {
+    my ($username, $password) = @_;
+
+    return 1 if $username eq config->{username} && $password eq config->{password};
+}
+
+get '/archive' => needs login => sub {
     my $items = schema->resultset('Item')->get_read;
     my $pager = $items->pager;
     template 'archive' => {
@@ -17,7 +33,7 @@ get '/archive' => sub {
     };
 };
 
-get '/archive/:page' => sub {
+get '/archive/:page' => needs login => sub {
     my $items = schema->resultset('Item')->get_read(param('page'));
     my $pager = $items->pager;
     template 'archive' => {
@@ -26,20 +42,20 @@ get '/archive/:page' => sub {
     };
 };
 
-get '/' => sub {
+get '/' => needs login => sub {
     my $items = [ schema->resultset('Item')->get_unread()->all ];
     template 'index' => {
         items => $items
     };
 };
 
-get '/extras' => sub {
+get '/extras' => needs login => sub {
     template 'extras' => {
         uri_base => request->uri_base
     };
 };
 
-get '/d/:id' => sub {
+get '/d/:id' => needs login => sub {
     my $item = schema->resultset('Item')->find( { id => param('id') } );
     if ( $item ) {
         template 'diff' => {
@@ -48,14 +64,14 @@ get '/d/:id' => sub {
     }
 };
 
-get '/:id' => sub {
+get '/:id' => needs login => sub {
     my $items = [ schema->resultset('Item')->get_unread( param('feed') )->all ];
     template 'index' => {
         items => $items
     };
 };
 
-post '/viewed' => sub {
+post '/viewed' => needs login => sub {
     my $id = param "id";
     my $item = schema->resultset('Item')->find( { id => $id } );
     if ( $item ) {
@@ -66,7 +82,7 @@ post '/viewed' => sub {
     send_as JSON => { success => 1, id => $id };
 };
 
-get '/admin/add' => sub {
+get '/admin/add' => needs login => sub {
     my $uri = param "uri";
     if ( $uri ) {
         my $feed = schema->resultset('Feed')->find_or_create(
@@ -84,7 +100,7 @@ get '/admin/add' => sub {
     }
 };
 
-post '/admin/add' => sub {
+post '/admin/add' => needs login => sub {
     my $name = param "name";
     my $uri  = param "uri";
 
@@ -100,14 +116,14 @@ post '/admin/add' => sub {
     };
 };
 
-get '/admin/list' => sub {
+get '/admin/list' => needs login => sub {
     my $feeds = schema->resultset('Feed')->search();
     template 'list' => {
         feeds => $feeds,
     };
 };
 
-post '/admin/fetch_on' => sub {
+post '/admin/fetch_on' => needs login => sub {
     my $id = param "id";
 
     my $feed = schema->resultset('Feed')->find( { id => $id } );
@@ -116,7 +132,7 @@ post '/admin/fetch_on' => sub {
     send_as JSON => { success => 1, id => $feed->id };
 };
 
-post '/admin/fetch_off' => sub {
+post '/admin/fetch_off' => needs login => sub {
     my $id = param "id";
 
     my $feed = schema->resultset('Feed')->find( { id => $id } );
