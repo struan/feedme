@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="viewport" content="initial-scale=1.0">
-    <meta http-equiv="Content-type" content="text/html; charset=<% settings.charset %>" />
+    <meta http-equiv="Content-type" content="text/html; charset=[% settings.charset %]" />
     <title>feedme</title>
     <link rel="stylesheet" href="/css/style.css" />
     <script src="/javascripts/zepto.js"></script>
@@ -10,9 +10,9 @@
 
 </head>
 <body>
-<% content %>
+[% content %]
     <div id="footer">
-    Powered by <a href="http://perldancer.org/">Dancer</a> <% dancer_version %>
+    Powered by <a href="http://perldancer.org/">Dancer</a> [% dancer_version %]
     </div>
 </body>
 </html>
