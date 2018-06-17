@@ -37,7 +37,7 @@ my $db_conf = config->{plugins}->{DBIC}->{default};
 my $schema = feedme::Schema->connect(
     $db_conf->{dsn},
     $db_conf->{user},
-    $db_conf->{pass}
+    $db_conf->{password}
 );
     
 my $feeds = $schema->resultset('Feed')->search( { should_fetch => 1 } );
