@@ -1,0 +1,11 @@
+<div id="page">
+    <div id="content">
+        <form action="/login" method="POST">
+            <ul>
+                <li><label for="username">username</label><input name="username" id="username" type="text"></li>
+                <li><label for="password">password</label><input name="password" id="password" type="password"></li>
+                <li><input type="submit" value="login"></li>
+            </ul>
+        </form>
+    </div>
+</div>
