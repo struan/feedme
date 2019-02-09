@@ -3,11 +3,9 @@ use warnings;
 
 use FindBin;
 use Cwd qw/realpath/;
-use Dancer ':script';
+use Dancer2 ':script';
 use Try::Tiny;
 use Getopt::Long;
- 
-my $appdir=realpath( "$FindBin::Bin/..");
 
 my $env = 'development';
 my $verbose;
@@ -17,14 +15,7 @@ my $result = GetOptions(
     "verbose" => \$verbose
 );
 
-# we seem to have to do all this, not sure why...
-Dancer::Config::setting('appdir',$appdir);
-Dancer::Config::setting('confdir',$appdir);
-Dancer::Config::setting('envdir',"$appdir/environments");
-
 config->{environment} = $env;
-
-Dancer::Config::load();
 
 use Modern::Perl;
 use feedme::Schema;

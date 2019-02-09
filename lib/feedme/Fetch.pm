@@ -6,6 +6,7 @@ use Carp;
 use HTTP::Headers;
 use HTTP::Request;
 use LWP::UserAgent;
+use Dancer2;
 
 use feedme::Exception;
 use feedme::UserAgent;
@@ -15,7 +16,7 @@ sub fetch_feed {
     my $feed = shift;
     my $content;
 
-    Dancer::debug sprintf( "fetching feed %d (%s)", $feed->id, $feed->name);
+    debug sprintf( "fetching feed %d (%s)", $feed->id, $feed->name);
     
     eval { 
         $content = fetch( { feed => $feed } );
@@ -25,11 +26,11 @@ sub fetch_feed {
              or UNIVERSAL::isa( $@, 'feedme::Exception::Fetch::MaxNotFound' ) 
              or UNIVERSAL::isa( $@, 'feedme::Exception::Fetch::NotAllowed' ) 
         ) {
-            Dancer::error $@;
+            error $@;
             $content = $@->rss($feed);
             $feed->update( { should_fetch => 0 } );
         } elsif ( UNIVERSAL::isa( $@, 'feedme::Exception::Fetch' ) ) {
-            Dancer::error $@;
+            error $@;
         } else {
             croak $@;
         }
@@ -125,7 +126,7 @@ sub fetch {
             );
             $feed->update();
             
-            if ( $feed->failed_updates && ( $feed->failed_updates > Dancer::Config::setting('max_not_found') ) ) {
+            if ( $feed->failed_updates && ( $feed->failed_updates > config->{'max_not_found'} ) ) {
                 feedme::Exception::Fetch::MaxNotFound->throw(
                     feed  => $feed->name,
                     code  => $resp->code,

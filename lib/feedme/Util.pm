@@ -8,6 +8,7 @@ use Carp;
 use File::Path;
 use Fcntl qw( :flock :seek );
 use File::Spec::Functions qw(rel2abs splitpath);
+use Dancer2;
 
 # stolen from LWP::UserAgent::request()
 sub uri_to_abs {
@@ -22,13 +23,13 @@ sub uri_to_abs {
 sub autodiscover {
     my $uri = shift;
 
-    Dancer::info "Attempting autodiscovery at $uri";
+    info "Attempting autodiscovery at $uri";
    
     my @links = XML::Feed->find_feeds( $uri );
 
-    if ( Dancer::Config::setting('DUMPER') ) {
-        Dancer::info "autodiscovery found:";
-        Dancer::info \@links;
+    if ( Config::setting('DUMPER') ) {
+        info "autodiscovery found:";
+        info \@links;
     }
    
     # just return the first link
