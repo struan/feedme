@@ -115,8 +115,7 @@ sub parse_rss {
 
         my $date = '';
         eval {
-            $date = $item->issued->dmy . ' ' . $item->issued->hms
-                if $item->issued; 
+            $date = $item->issued if $item->issued;
         };
         if ($@) {
             feedme::Exception::Parse->throw(
