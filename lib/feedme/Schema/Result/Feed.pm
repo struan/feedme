@@ -136,7 +136,7 @@ __PACKAGE__->filter_column(
     headers => {
         filter_from_storage => sub {
             my $self = shift;
-            my $header_string = shift;
+            my $header_string = shift || '';
             my $headers = HTTP::Headers->new();
             
             my %headers = map { m/([^:]*):\s*(.*)/; $1 => $2; } 
