@@ -1,3 +1,5 @@
+var is_read_checked = {};
+
 function manual_item_read(response) {
     var el = item_read(response);
     if ( el ) {
@@ -6,13 +8,14 @@ function manual_item_read(response) {
 }
 
 function item_read(response) {
-    var data = $.parseJSON( response );
+    var data = response;
     if ( data.success == 1 ) {
         var item_id = '#item_' + data.id;
         var el = $(item_id);
         el.removeClass('unread');
         el.addClass('read');
         el.children('.unread_end').removeClass();
+	is_read_checked[data.id] = 1;
         return el;
     }
 }
@@ -27,7 +30,9 @@ function check_for_read() {
         if ( el.offset().top < screenBottom ) {
             var item_id = el.attr('id');
             item_id = item_id.replace('item_end_', '');
-            $.post('/viewed', { id: item_id }, item_read );
+	    if (!is_read_checked[item_id]) {
+                $.post('/viewed', { id: item_id }, item_read );
+	    }
         }
     });
 }
