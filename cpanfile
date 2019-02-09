@@ -1,0 +1,10 @@
+requires 'Dancer2', '0.207000';
+requires 'Dancer2::Plugin::DBIC', '0.0100';
+requires 'Dancer2::Plugin::Auth::Tiny', '0.008';
+requires 'DBD::Pg', '3.7.4';
+requires 'LWP', '6.36';
+requires 'Modern::Perl', '1.20181021';
+requires 'XML::Feed', '0.59';
+requires 'HTML::ResolveLink', '0.05';
+requires 'Text::WordDiff', '0.09';
+requires 'LWP::Protocol::https', '6.07';
