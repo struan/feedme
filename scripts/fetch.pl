@@ -10,7 +10,7 @@ use Getopt::Long;
 my $env = 'development';
 my $verbose;
 
-my $result = GetOptions( 
+my $result = GetOptions(
     "env=s"   => \$env,
     "verbose" => \$verbose
 );
@@ -30,7 +30,7 @@ my $schema = feedme::Schema->connect(
     $db_conf->{user},
     $db_conf->{password}
 );
-    
+
 my $feeds = $schema->resultset('Feed')->search( { should_fetch => 1 } );
 
 while ( my $feed = $feeds->next) {
@@ -43,7 +43,7 @@ while ( my $feed = $feeds->next) {
 
     try {
         $items = feedme::Parse::parse_rss( string => $content, base => $feed->uri, feed => $feed );
-    } catch { 
+    } catch {
         warning sprintf( "problem parsing feed %s:\n%s\n", $feed->name, $_ );
     };
 

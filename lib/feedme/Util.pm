@@ -15,7 +15,7 @@ sub uri_to_abs {
     my $uri = shift;
     my $base = shift;
     local $URI::ABS_ALLOW_RELATIVE_SCHEME = 1;
-    return $HTTP::URI_CLASS->new($uri, $base)                                 
+    return $HTTP::URI_CLASS->new($uri, $base)
         ->abs($base);
 }
 
@@ -24,14 +24,14 @@ sub autodiscover {
     my $uri = shift;
 
     info "Attempting autodiscovery at $uri";
-   
+
     my @links = XML::Feed->find_feeds( $uri );
 
     if ( Config::setting('DUMPER') ) {
         info "autodiscovery found:";
         info \@links;
     }
-   
+
     # just return the first link
     if ( @links ) {
         return $links[0];
@@ -53,7 +53,7 @@ sub _write_to_file {
     my $file = shift;
     my $string = shift;
     my $feed_name = shift;
-    
+
     return undef unless $file;
     return undef unless $string;
 
@@ -61,8 +61,8 @@ sub _write_to_file {
 
     my $dir = (splitpath($file))[1];
     mkpath $dir unless -e $dir;
-    
-    open FILE, ">", "$file" 
+
+    open FILE, ">", "$file"
         or do {
             my $_file_err = "Failed to write to [$file] - $!";
             feedme::Exception->throw(
@@ -72,10 +72,10 @@ sub _write_to_file {
         };
     flock FILE, LOCK_EX;
     seek FILE, 0, SEEK_SET;
-    # binmode FILE, "utf8" if $] > 5.007; 
+    # binmode FILE, "utf8" if $] > 5.007;
     print FILE $string;
     close FILE;
-   
+
     return 1;
 }
 

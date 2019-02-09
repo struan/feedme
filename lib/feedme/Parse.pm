@@ -18,7 +18,7 @@ BEGIN {
     }
 };
 
-# this is all basically to get round the less than optimal unicode 
+# this is all basically to get round the less than optimal unicode
 # processing in perl 5.6. it means we loose some content but that things
 # don't blow up in our face. it is less than optimal :(
 # it also gets round some issue XML::RSS has with weird windows chars
@@ -34,7 +34,7 @@ sub clean_rss {
 
     # some XML::RSS versions don't seem to like windows encoding maps...
     # god alone knows what happens if there are any windows encoded
-    # characters in there. 
+    # characters in there.
     #if ($XML::RSS::VERSION < 2.32 ) {
     #    $rss =~ s#encoding="windows[^"]*"#encoding="iso-8859-1"#;
     #}
@@ -57,7 +57,7 @@ sub parse_rss {
     eval {
         # local $^W = 0; # XML::RSS spews warnings on some rss files :(
         if ( exists( $args{file} ) ) {
-            $parser = XML::Feed->parse( $args{file}) 
+            $parser = XML::Feed->parse( $args{file})
                 or die XML::Feed->errstr;
         } else {
             $parser = XML::Feed->parse( \$args{string} )
@@ -65,7 +65,7 @@ sub parse_rss {
         }
     };
     if ($@) {
-        # sometimes things fail to parse if we have unicode in them 
+        # sometimes things fail to parse if we have unicode in them
         # but they're not properly encoded so we try this to see if
         # it helps. if not then spit out the original error
         unless ( $failed_parse and $] < 5.007 ) {
@@ -76,7 +76,7 @@ sub parse_rss {
             $parse_count++;
             goto PARSE if $parse_count < 2;
         }
-        feedme::Exception::Parse->throw( 
+        feedme::Exception::Parse->throw(
             feed => $args{feed_name},
             error => ( $failed_parse or $@ )
         );
@@ -95,7 +95,7 @@ sub parse_rss {
     foreach my $item ( $parser->entries ) {
         my $desc = $item->content->body || '[no content]';
         unless ( $] < 5.007 ) {
-            $desc = decode( 'utf8', $desc ) 
+            $desc = decode( 'utf8', $desc )
                 unless Encode::is_utf8( $desc );
         }
 
@@ -126,7 +126,7 @@ sub parse_rss {
 
         my $permalink = $item->id;
 
-        my $author = $item->author 
+        my $author = $item->author
                      || '';
 
         my $link = $item->link;
@@ -154,28 +154,28 @@ sub parse_rss {
                     $link = $link->href;
                 }
             }
-            # sometime we need to use the base URI in combination 
+            # sometime we need to use the base URI in combination
             # with the link to get an absolute URI...
             if ( not $link or $link !~ /^https?:/ ) {
                 debug "DEBUG: still no http in link or id, useing _uri_to_abs on "
                       . ( $link || 'missing link' ) . " and " . $parser->link . "\n";
                 my $base = $parser->link;
                 $base = $args{feed_uri} if $base eq '.' or $base !~ /^https?:/;
-                $link = feedme::Util::uri_to_abs($link, $base);    
+                $link = feedme::Util::uri_to_abs($link, $base);
             }
         }
 
         my $resolver = HTML::ResolveLink->new(
             base => $link,
         );
-        
+
         $desc = $resolver->resolve( $desc );
-        
-        push @feed, { 
+
+        push @feed, {
                       author => $author,
-                      content => $desc, 
-                      title => $title, 
-                      date => $date, 
+                      content => $desc,
+                      title => $title,
+                      date => $date,
                       permalink => $permalink,
                       link => $link || '[no link]',
                     };

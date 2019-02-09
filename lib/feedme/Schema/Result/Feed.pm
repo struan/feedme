@@ -138,8 +138,8 @@ __PACKAGE__->filter_column(
             my $self = shift;
             my $header_string = shift || '';
             my $headers = HTTP::Headers->new();
-            
-            my %headers = map { m/([^:]*):\s*(.*)/; $1 => $2; } 
+
+            my %headers = map { m/([^:]*):\s*(.*)/; $1 => $2; }
                                                 split("\n", $header_string );
 
             foreach my $header ( keys %headers ) {
@@ -153,9 +153,9 @@ __PACKAGE__->filter_column(
             my $headers = shift;
             return '' unless $headers;
             my $header_string = "";
-            
+
             if ( $headers->header( 'Last-Modified' ) ) {
-                $header_string = "If-Modified-Since: " 
+                $header_string = "If-Modified-Since: "
                                  . $headers->header('Last-Modified')
                                  . "\n";
             }

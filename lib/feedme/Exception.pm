@@ -1,4 +1,4 @@
-package feedme::Exception; 
+package feedme::Exception;
 
 use Exception::Class (
     feedme::Exception => {
@@ -49,7 +49,7 @@ use base 'Exception::Class::Base';
 sub full_message {
     my $self = shift;
 
-    my $message = 'ERROR' . ( $self->feed ? 
+    my $message = 'ERROR' . ( $self->feed ?
                             ' with ' . $self->feed :
                             '' ) . ': ' . $self->description;
 

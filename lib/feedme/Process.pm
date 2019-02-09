@@ -20,18 +20,18 @@ sub process_feed {
     my $schema = shift;
 
     foreach my $fetched_item ( @$items ) {
-        my $string_to_md5 = $fetched_item->{ 'title' } 
+        my $string_to_md5 = $fetched_item->{ 'title' }
                           . $fetched_item->{ 'content' };
-        
+
         # we do this to stop wide character warnings
         $string_to_md5 = encode('utf8', $string_to_md5) unless $] < 5.007;
         my $md5 = md5_hex( $string_to_md5 );
         $fetched_item->{ 'md5' } = $md5;
-        
+
         my $item = $schema->resultset('Item')->find_or_create( {
                             permalink => $fetched_item->{'permalink'},
-                            feed_id   => UNIVERSAL::can( $feed, 'id' ) ? 
-                                            $feed->id 
+                            feed_id   => UNIVERSAL::can( $feed, 'id' ) ?
+                                            $feed->id
                                             : 0,
                                         } );
 
@@ -41,9 +41,9 @@ sub process_feed {
 
             # has it changed in any significant way though?
             my $diff;
-            if ( $fetched_item->{'content'} and 
+            if ( $fetched_item->{'content'} and
                  $diff = diff_text( $fetched_item->{'content'},
-                                       $item->content ) ) 
+                                       $item->content ) )
             {
                 $item->content( $fetched_item->{'content'} );
                 $item->title( $fetched_item->{'title'} );
@@ -85,7 +85,7 @@ sub diff_text {
     # the diff running together...
     $new .= "\n" unless $new =~ /\n$/s;
     $orig .= "\n" unless $orig =~ /\n$/s;
-    
+
     my $diff = word_diff( \$orig, \$new, { STYLE => 'HTML' } );
 
     return $diff;
