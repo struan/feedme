@@ -20,23 +20,6 @@ function item_read(response) {
     }
 }
 
-function check_for_read() {
-    var viewHeight = $(window).height();
-    var screenTop = $('body').scrollTop();
-    var screenBottom = viewHeight + screenTop;
-
-    $('.unread_end').each( function() {
-        var el = $(this);
-        if ( el.offset().top < screenBottom ) {
-            var item_id = el.attr('id');
-            item_id = item_id.replace('item_end_', '');
-	    if (!is_read_checked[item_id]) {
-                $.post('/viewed', { id: item_id }, item_read );
-	    }
-        }
-    });
-}
-
 function mark_as_read(e) {
     e.preventDefault();
     var el = $(e.srcElement);
@@ -57,9 +40,19 @@ function toggle_fetch(e) {
     }
 }
 
+var observer = new IntersectionObserver(function(entries) {
+	if(entries[0].isIntersecting === true)
+    var el = entries[0].target;
+    var item_id = el.id;
+    item_id = item_id.replace('item_end_', '');
+    if (!is_read_checked[item_id]) {
+      $.post('/viewed', { id: item_id }, item_read );
+    }
+}, { threshold: [0] });
+
+
 Zepto(function($) {
-    $(document).on('scroll', check_for_read );
+    observer.observe(document.querySelector(".unread_end"));
     $('.mark_as_read').on('click', mark_as_read);
     $('ul.feedlist li').on('click', toggle_fetch);
-    $('li.item');
 });
