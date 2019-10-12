@@ -43,16 +43,19 @@ function toggle_fetch(e) {
 var observer = new IntersectionObserver(function(entries) {
 	if(entries[0].isIntersecting === true)
     var el = entries[0].target;
-    var item_id = el.id;
-    item_id = item_id.replace('item_end_', '');
-    if (!is_read_checked[item_id]) {
-      $.post('/viewed', { id: item_id }, item_read );
+    if (el) {
+      var item_id = el.id;
+      item_id = item_id.replace('item_end_', '');
+      if (!is_read_checked[item_id]) {
+        $.post('/viewed', { id: item_id }, item_read );
+      }
     }
 }, { threshold: [0] });
 
 
 Zepto(function($) {
-    observer.observe(document.querySelector(".unread_end"));
+    var unreads = document.querySelectorAll(".unread_end");
+    unreads.forEach(function(unread) { observer.observe(unread) });
     $('.mark_as_read').on('click', mark_as_read);
     $('ul.feedlist li').on('click', toggle_fetch);
 });
